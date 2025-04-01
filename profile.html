@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SkillPath Profile - Manage your learning journey">
+    <title>My Profile | SkillPath</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="hackathon.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <style>
+        .profile-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .profile-sidebar {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .profile-main {
+            background: var(--secondary);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .profile-name {
+            font-size: 1.8rem;
+            color: var(--text);
+            margin: 0;
+        }
+        
+        .profile-title {
+            color: var(--accent);
+            margin: 5px 0 15px;
+            font-weight: 500;
+        }
+        
+        .profile-bio {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .profile-menu {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        .profile-menu-item {
+            margin-bottom: 15px;
+        }
+        
+        .profile-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-menu-link:hover, .profile-menu-link.active {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        
+        .profile-menu-link i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .profile-section {
+            margin-bottom: 40px;
+        }
+        
+        .profile-section h2 {
+            color: var(--accent);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .profile-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .progress-container {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .progress-title {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin: 0;
+        }
+        
+        .progress-percent {
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 5px;
+            width: 75%;
+        }
+        
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .badges-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+        }
+        
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .badge:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+        
+        .badge-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .badge-name {
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--text);
+        }
+        
+        .badge.locked {
+            opacity: 0.5;
+        }
+        
+        .badge.locked .badge-icon {
+            background: #333;
+            color: var(--text-secondary);
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-text {
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+        
+        .activity-time {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .edit-profile-btn {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .edit-profile-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                position: static;
+            }
+            
+            .profile-stats {
+                gap: 10px;
+            }
+            
+            .badges-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="head">
+        <div class="logo">
+            <img src="skilllogo-removebg-preview.png" alt="SkillPath Logo">
+        </div>
+        <div class="action">
+            <a href="hackathon.html">Home</a>
+            <a href="problem.html">Problems</a>
+            <a href="discuss.html">Discuss</a>
+            <a href="competition.html">Competition</a>
+            <a href="network.html">Network</a>
+            <a href="jobs-and-internship.html">Jobs</a>
+        </div>
+        <div class="actionContainer">
+            <span class="material-symbols-outlined actionIcon"> person </span>
+            <a href="profile.html" class="actionName">Profile</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <aside class="profile-sidebar">
+                <div class="profile-header">
+                    <img src="shery.jpg" alt="Profile Picture" class="profile-avatar">
+                    <h1 class="profile-name">Shery Shukla</h1>
+                    <p class="profile-title">Full Stack Developer</p>
+                    <p class="profile-bio">
+                        Passionate about building web applications and solving complex problems. 
+                        Currently mastering React and Node.js.
+                    </p>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="stat-number">142</div>
+                            <div class="stat-label">Problems</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-number">87%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Badges</div>
+                        </div>
+                    </div>
+                    <button class="edit-profile-btn">
+                        <i class="fas fa-edit"></i> Edit Profile
+                    </button>
+                </div>
+                
+                <ul class="profile-menu">
+                    <li class="profile-menu-item"><a href="#" class="profile-menu-link active"><i class="fas fa-user"></i> Overview</a></li>
+                    <li class="profile-menu-item"><a href="#" class="profile-menu-link"><i class="fas fa-chart-line"></i> Progress</a></li>
+                    <li class="profile-menu-item"><a href="#" class="profile-menu-link"><i class="fas fa-trophy"></i> Achievements</a></li>
+                    <li class="profile-menu-item"><a href="#" class="profile-menu-link"><i class="fas fa-code"></i> Solutions</a></li>
+                    <li class="profile-menu-item"><a href="#" class="profile-menu-link"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </aside>
+
+            <div class="profile-main">
+                <div class="profile-section">
+                    <h2>Learning Progress</h2>
+                    
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <h3 class="progress-title">Data Structures & Algorithms</h3>
+                            <span class="progress-percent">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <div class="progress-details">
+                            <span>Completed: 45/60</span>
+                            <span>Last studied: 2 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <h3 class="progress-title">Frontend Development</h3>
+                            <span class="progress-percent">60%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <div class="progress-details">
+                            <span>Completed: 30/50</span>
+                            <span>Last studied: 1 week ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <h3 class="progress-title">Backend Development</h3>
+                            <span class="progress-percent">40%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+                        <div class="progress-details">
+                            <span>Completed: 20/50</span>
+                            <span>Last studied: 3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h2>Recent Achievements</h2>
+                    <div class="badges-container">
+                        <div class="badge">
+                            <div class="badge-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <span class="badge-name">First Problem Solved</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <span class="badge-name">5-Day Streak</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="badge-name">Top 10% Solver</span>
+                        </div>
+                        <div class="badge">
+                            <div class="badge-icon">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <span class="badge-name">50 Problems</span>
+                        </div>
+                        <div class="badge locked">
+                            <div class="badge-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <span class="badge-name">100 Problems</span>
+                        </div>
+                        <div class="badge locked">
+                            <div class="badge-icon">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <span class="badge-name">Master Solver</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Solved "Two Sum" problem in JavaScript</p>
+                            <p class="activity-time">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Earned "5-Day Streak" badge</p>
+                            <p class="activity-time">1 day ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Posted in discussion: "React vs Angular"</p>
+                            <p class="activity-time">2 days ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Ranked in top 20% in Weekly Challenge #42</p>
+                            <p class="activity-time">3 days ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="activity-content">
+                            <p class="activity-text">Completed "Advanced Algorithms" chapter</p>
+                            <p class="activity-time">1 week ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About SkillPath</h3>
+                <p>An AI-driven platform transforming how students acquire in-demand tech skills through personalized learning journeys, real-world challenges, and professional networking.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="hackathon.html">Home</a></li>
+                    <li><a href="problem.html">Problem Library</a></li>
+                    <li><a href="discuss.html">Community Forum</a></li>
+                    <li><a href="competition.html">Coding Competitions</a></li>
+                    <li><a href="network.html">Professional Network</a></li>
+                    <li><a href="jobs-and-internship.html">Jobs & Internships</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Learning Paths</a></li>
+                    <li><a href="#">Skill Assessment</a></li>
+                    <li><a href="#">Interview Prep</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> contact@skillpath.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="year"></span> SkillPath. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="hackathon.js"></script>
+    <script>
+        // Additional profile page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Profile menu navigation
+            const menuLinks = document.querySelectorAll('.profile-menu-link');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    menuLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    // Here you would load the selected section
+                });
+            });
+            
+            // Edit profile button
+            const editBtn = document.querySelector('.edit-profile-btn');
+            editBtn.addEventListener('click', function() {
+                // Here you would open the profile editor
+                alert('Profile editor would open here');
+            });
+            
+            // Dynamic year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
